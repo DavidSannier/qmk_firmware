@@ -57,7 +57,7 @@
             if (write_location >= ((uint32_t)count)) {                                                                    \
                 uint32_t inner_avg = inner_sum / (((uint32_t)count) - 1);                                                 \
                 uint32_t outer_avg = outer_sum / (((uint32_t)count) - 1);                                                 \
-                dprintf("%s -- Percentage time spent: %d%%\n", (name), (int)(inner_avg * 100 / (inner_avg + outer_avg))); \
+                dprintfmt("%s -- Percentage time spent: %d%%\n", (name), (int)(inner_avg * 100 / (inner_avg + outer_avg))); \
                 inner_sum      = 0;                                                                                       \
                 outer_sum      = 0;                                                                                       \
                 write_location = 0;                                                                                       \

@@ -46,7 +46,7 @@ void keyboard_post_init_user(void) {
 * `print("string")`: シンプルな文字列を出力します
 * `uprintf("%s string", var)`: フォーマットされた文字列を出力します
 * `dprint("string")` デバッグモードが有効な場合のみ、シンプルな文字列を出力します
-* `dprintf("%s string", var)`: デバッグモードが有効な場合のみ、フォーマットされた文字列を出力します
+* `dprintfmt("%s string", var)`: デバッグモードが有効な場合のみ、フォーマットされた文字列を出力します
 
 ## デバッグの例
 

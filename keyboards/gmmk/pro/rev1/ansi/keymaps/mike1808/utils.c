@@ -28,7 +28,7 @@ void store_rgb_state_to_eeprom(void) {
 void press(KeyPressState *self) {
     self->_count++;
 
-    dprintf("KPS: press: %d\n", self->_count);
+    dprintfmt("KPS: press: %d\n", self->_count);
 
     // pressed the first time
     if (self->_count == 1) {
@@ -39,7 +39,7 @@ void press(KeyPressState *self) {
 void release(KeyPressState *self) {
     self->_count--;
 
-    dprintf("KPS: release: %d\n", self->_count);
+    dprintfmt("KPS: release: %d\n", self->_count);
 
     // all keys are relased
     if (self->_count == 0) {

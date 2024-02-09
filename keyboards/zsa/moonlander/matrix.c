@@ -53,14 +53,14 @@ void mcp23018_init(void) {
     mcp23018_tx[2] = 0b00111111;  // B is inputs
 
     if (MSG_OK != i2c_transmit(MCP23018_DEFAULT_ADDRESS << 1, mcp23018_tx, 3, MOONLANDER_I2C_TIMEOUT)) {
-        dprintf("error hori\n");
+        dprintfmt("error hori\n");
     } else {
         mcp23018_tx[0] = 0x0C;        // GPPUA
         mcp23018_tx[1] = 0b10000000;  // A is not pulled-up
         mcp23018_tx[2] = 0b11111111;  // B is pulled-up
 
         if (MSG_OK != i2c_transmit(MCP23018_DEFAULT_ADDRESS << 1, mcp23018_tx, 3, MOONLANDER_I2C_TIMEOUT)) {
-            dprintf("error hori\n");
+            dprintfmt("error hori\n");
         } else {
             mcp23018_initd = is_launching = true;
         }
@@ -68,7 +68,7 @@ void mcp23018_init(void) {
 }
 
 void matrix_init_custom(void) {
-    dprintf("matrix init\n");
+    dprintfmt("matrix init\n");
     // debug_matrix = true;
     // outputs
     setPinOutput(B10);
@@ -137,7 +137,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
             mcp23018_tx[2] = ((uint8_t)!mcp23018_leds[1] << 6) | ((uint8_t)!mcp23018_leds[0] << 7);  // activate row
 
             if (MSG_OK != i2c_transmit(MCP23018_DEFAULT_ADDRESS << 1, mcp23018_tx, 3, MOONLANDER_I2C_TIMEOUT)) {
-                dprintf("error hori\n");
+                dprintfmt("error hori\n");
                 mcp23018_initd = false;
             }
 
@@ -145,7 +145,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
             mcp23018_tx[0] = 0x13;  // GPIOB
             if (MSG_OK != i2c_read_register(MCP23018_DEFAULT_ADDRESS << 1, mcp23018_tx[0], &mcp23018_rx[0], 1, MOONLANDER_I2C_TIMEOUT)) {
-                dprintf("error vert\n");
+                dprintfmt("error vert\n");
                 mcp23018_initd = false;
             }
 

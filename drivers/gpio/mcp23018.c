@@ -35,13 +35,13 @@ bool mcp23018_set_config(uint8_t slave_addr, mcp23018_port_t port, uint8_t conf)
 
     i2c_status_t ret = i2c_write_register(addr, cmdDirection, &conf, sizeof(conf), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_set_config::directionFAILED::%u\n", ret);
+        dprintfmt("mcp23018_set_config::directionFAILED::%u\n", ret);
         return false;
     }
 
     ret = i2c_write_register(addr, cmdPullup, &conf, sizeof(conf), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_set_config::pullupFAILED::%u\n", ret);
+        dprintfmt("mcp23018_set_config::pullupFAILED::%u\n", ret);
         return false;
     }
 
@@ -54,7 +54,7 @@ bool mcp23018_set_output(uint8_t slave_addr, mcp23018_port_t port, uint8_t conf)
 
     i2c_status_t ret = i2c_write_register(addr, cmd, &conf, sizeof(conf), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_set_output::FAILED::%u\n", ret);
+        dprintfmt("mcp23018_set_output::FAILED::%u\n", ret);
         return false;
     }
 
@@ -67,7 +67,7 @@ bool mcp23018_set_output_all(uint8_t slave_addr, uint8_t confA, uint8_t confB) {
 
     i2c_status_t ret = i2c_write_register(addr, CMD_GPIOA, &conf[0], sizeof(conf), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_set_output::FAILED::%u\n", ret);
+        dprintfmt("mcp23018_set_output::FAILED::%u\n", ret);
         return false;
     }
 
@@ -80,7 +80,7 @@ bool mcp23018_readPins(uint8_t slave_addr, mcp23018_port_t port, uint8_t* out) {
 
     i2c_status_t ret = i2c_read_register(addr, cmd, out, sizeof(uint8_t), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_readPins::FAILED::%u\n", ret);
+        dprintfmt("mcp23018_readPins::FAILED::%u\n", ret);
         return false;
     }
 
@@ -99,7 +99,7 @@ bool mcp23018_readPins_all(uint8_t slave_addr, uint16_t* out) {
 
     i2c_status_t ret = i2c_read_register(addr, CMD_GPIOA, &data.u8[0], sizeof(data), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("mcp23018_readPins::FAILED::%u\n", ret);
+        dprintfmt("mcp23018_readPins::FAILED::%u\n", ret);
         return false;
     }
 

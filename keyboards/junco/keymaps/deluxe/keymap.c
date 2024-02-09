@@ -296,7 +296,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // If currently not sticky, we want only the adjust layer to be active to make it stick.
                 // Otherwise we want the default layer, un-stick.
                 is_adjust_layer_sticky(layer_state) ? layer_state_set(default_layer_state) : layer_move(_ADJUST);
-                dprintf("Adjust layer is now %s\n", is_adjust_layer_sticky(layer_state) ? "stuck" : "un-stuck");
+                dprintfmt("Adjust layer is now %s\n", is_adjust_layer_sticky(layer_state) ? "stuck" : "un-stuck");
             }
             return false;
         default:

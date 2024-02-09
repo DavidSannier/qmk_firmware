@@ -87,9 +87,9 @@ void host_keyboard_send(report_keyboard_t *report) {
     (*driver->send_keyboard)(report);
 
     if (debug_keyboard) {
-        dprintf("keyboard_report: %02X | ", report->mods);
+        dprintfmt("keyboard_report: %02X | ", report->mods);
         for (uint8_t i = 0; i < KEYBOARD_REPORT_KEYS; i++) {
-            dprintf("%02X ", report->keys[i]);
+            dprintfmt("%02X ", report->keys[i]);
         }
         dprint("\n");
     }
@@ -101,9 +101,9 @@ void host_nkro_send(report_nkro_t *report) {
     (*driver->send_nkro)(report);
 
     if (debug_keyboard) {
-        dprintf("nkro_report: %02X | ", report->mods);
+        dprintfmt("nkro_report: %02X | ", report->mods);
         for (uint8_t i = 0; i < NKRO_REPORT_BITS; i++) {
-            dprintf("%02X ", report->bits[i]);
+            dprintfmt("%02X ", report->bits[i]);
         }
         dprint("\n");
     }

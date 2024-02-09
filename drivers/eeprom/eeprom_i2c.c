@@ -74,7 +74,7 @@ void eeprom_driver_erase(void) {
     }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-    dprintf("EEPROM erase took %ldms to complete\n", ((long)(timer_read32() - start)));
+    dprintfmt("EEPROM erase took %ldms to complete\n", ((long)(timer_read32() - start)));
 #endif
 }
 
@@ -86,11 +86,11 @@ void eeprom_read_block(void *buf, const void *addr, size_t len) {
     i2c_receive(EXTERNAL_EEPROM_I2C_ADDRESS((uintptr_t)addr), buf, len, 100);
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-    dprintf("[EEPROM R] 0x%04X: ", ((int)addr));
+    dprintfmt("[EEPROM R] 0x%04X: ", ((int)addr));
     for (size_t i = 0; i < len; ++i) {
-        dprintf(" %02X", (int)(((uint8_t *)buf)[i]));
+        dprintfmt(" %02X", (int)(((uint8_t *)buf)[i]));
     }
-    dprintf("\n");
+    dprintfmt("\n");
 #endif // DEBUG_EEPROM_OUTPUT
 }
 
@@ -117,11 +117,11 @@ void eeprom_write_block(const void *buf, void *addr, size_t len) {
         }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-        dprintf("[EEPROM W] 0x%04X: ", ((int)target_addr));
+        dprintfmt("[EEPROM W] 0x%04X: ", ((int)target_addr));
         for (uint8_t i = 0; i < write_length; i++) {
-            dprintf(" %02X", (int)(read_buf[i]));
+            dprintfmt(" %02X", (int)(read_buf[i]));
         }
-        dprintf("\n");
+        dprintfmt("\n");
 #endif // DEBUG_EEPROM_OUTPUT
 
         i2c_transmit(EXTERNAL_EEPROM_I2C_ADDRESS((uintptr_t)addr), complete_packet, EXTERNAL_EEPROM_ADDRESS_SIZE + write_length, 100);

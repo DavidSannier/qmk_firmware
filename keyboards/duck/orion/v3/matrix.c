@@ -88,7 +88,7 @@ uint8_t matrix_scan(void) {
       if (prev_bit != curr_bit) {
         matrix_debouncing[row] ^= ((matrix_row_t)1<<col);
         if (debouncing) {
-            dprint("bounce!: "); dprintf("%02X", debouncing); dprintln();
+            dprint("bounce!: "); dprintfmt("%02X", debouncing); dprintln();
         }
         debouncing = DEBOUNCE;
       }

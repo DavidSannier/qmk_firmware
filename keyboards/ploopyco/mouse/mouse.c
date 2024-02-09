@@ -106,7 +106,7 @@ void process_wheel(void) {
     lastScroll  = timer_read();
     uint16_t p1 = adc_read(OPT_ENC1_MUX);
     uint16_t p2 = adc_read(OPT_ENC2_MUX);
-    if (debug_encoder) dprintf("OPT1: %d, OPT2: %d\n", p1, p2);
+    if (debug_encoder) dprintfmt("OPT1: %d, OPT2: %d\n", p1, p2);
 
     int dir = opt_encoder_handler(p1, p2);
 
@@ -134,7 +134,7 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     if (debug_mouse) {
-        dprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
+        dprintfmt("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
     }
 
     // Update Timer to prevent accidental scrolls

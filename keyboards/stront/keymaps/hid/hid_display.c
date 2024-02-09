@@ -151,15 +151,15 @@ bool display_init_user(void) {
 void display_process_raw_hid_data(uint8_t *data, uint8_t length) {
     uint8_t data_type = data[0];
     char    string_data[length - 2];
-    dprintf("display_process_raw_hid_data - received data_type %u \n", data_type);
+    dprintfmt("display_process_raw_hid_data - received data_type %u \n", data_type);
     switch (data_type) {
         case _TIME:
-            dprintf("time %02d:%02d\n", data[1], data[2]);
+            dprintfmt("time %02d:%02d\n", data[1], data[2]);
             lv_label_set_text_fmt(label_time, "%02d:%02d", data[1], data[2]);
             break;
 
         case _VOLUME:
-            dprintf("volume %d\n", data[1]);
+            dprintfmt("volume %d\n", data[1]);
             lv_label_set_text_fmt(label_volume_home, "Volume: %02d%%", data[1]);
             lv_label_set_text_fmt(label_volume_arc, "%02d", data[1]);
             lv_arc_set_value(arc_volume, data[1]);
@@ -168,13 +168,13 @@ void display_process_raw_hid_data(uint8_t *data, uint8_t length) {
             break;
 
         case _LAYOUT:
-            dprintf("layout %d\n", data[1]);
+            dprintfmt("layout %d\n", data[1]);
             set_layout_label(data[1]);
             break;
 
         case _MEDIA_ARTIST:
             read_string(data, string_data);
-            dprintf("media artist %s\n", string_data);
+            dprintfmt("media artist %s\n", string_data);
             lv_label_set_text(label_media_artist, string_data);
             lv_scr_load(screen_media);
             start_home_screen_timer();
@@ -182,7 +182,7 @@ void display_process_raw_hid_data(uint8_t *data, uint8_t length) {
 
         case _MEDIA_TITLE:
             read_string(data, string_data);
-            dprintf("media title %s\n", string_data);
+            dprintfmt("media title %s\n", string_data);
             lv_label_set_text(label_media_title, string_data);
             lv_scr_load(screen_media);
             start_home_screen_timer();

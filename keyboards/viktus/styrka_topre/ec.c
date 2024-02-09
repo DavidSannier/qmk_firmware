@@ -184,8 +184,8 @@ bool ec_matrix_scan(matrix_row_t current_matrix[]) {
 /*void ec_dprint_matrix(void) {
     for (int row = 0; row < sizeof(row_channels); row++) {
         for (int col = 0; col < sizeof(col_pins); col++) {
-            dprintf("%5d", ec_sw_value[col][row]);
+            dprintfmt("%5d", ec_sw_value[col][row]);
         }
-        dprintf("\n");
+        dprintfmt("\n");
     }
 }*/

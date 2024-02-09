@@ -220,7 +220,7 @@ void add_key_bit(report_nkro_t* nkro_report, uint8_t code) {
     if ((code >> 3) < NKRO_REPORT_BITS) {
         nkro_report->bits[code >> 3] |= 1 << (code & 7);
     } else {
-        dprintf("add_key_bit: can't add: %02X\n", code);
+        dprintfmt("add_key_bit: can't add: %02X\n", code);
     }
 }
 
@@ -232,7 +232,7 @@ void del_key_bit(report_nkro_t* nkro_report, uint8_t code) {
     if ((code >> 3) < NKRO_REPORT_BITS) {
         nkro_report->bits[code >> 3] &= ~(1 << (code & 7));
     } else {
-        dprintf("del_key_bit: can't del: %02X\n", code);
+        dprintfmt("del_key_bit: can't del: %02X\n", code);
     }
 }
 #endif

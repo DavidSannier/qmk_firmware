@@ -348,7 +348,7 @@ int main(void) {
         if (timer_read64() > next_print) {
             next_print = timer_read64() + 250;
             // Add any debug information here that you want to see very often
-            // dprintf("5v=%u 5vu=%u dlow=%u dhi=%u gca=%u gcd=%u\r\n", v_5v, v_5v_avg, v_5v_avg - V5_LOW, v_5v_avg - V5_HIGH, gcr_actual, gcr_desired);
+            // dprintfmt("5v=%u 5vu=%u dlow=%u dhi=%u gca=%u gcd=%u\r\n", v_5v, v_5v_avg, v_5v_avg - V5_LOW, v_5v_avg - V5_HIGH, gcr_actual, gcr_desired);
         }
 #endif // CONSOLE_ENABLE
 

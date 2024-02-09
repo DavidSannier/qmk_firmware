@@ -29,7 +29,7 @@ void send_str(const char *str)
 
 void serial_send(uint8_t data)
 {
-    dprintf("Sending: %u\n", data);
+    dprintfmt("Sending: %u\n", data);
 }
 
 void send_bytes(uint8_t data)
@@ -45,21 +45,21 @@ void send_bytes(uint8_t data)
 #ifdef BLUEFRUIT_TRACE_SERIAL
 static void bluefruit_trace_header(void)
 {
-    dprintf("+------------------------------------+\n");
-    dprintf("| HID report to Bluefruit via serial |\n");
-    dprintf("+------------------------------------+\n|");
+    dprintfmt("+------------------------------------+\n");
+    dprintfmt("| HID report to Bluefruit via serial |\n");
+    dprintfmt("+------------------------------------+\n|");
 }
 
 static void bluefruit_trace_footer(void)
 {
-    dprintf("|\n+------------------------------------+\n\n");
+    dprintfmt("|\n+------------------------------------+\n\n");
 }
 #endif
 
 static void bluefruit_serial_send(uint8_t data)
 {
 #ifdef BLUEFRUIT_TRACE_SERIAL
-    dprintf(" %02X ", data);
+    dprintfmt(" %02X ", data);
 #endif
     serial_send(data);
 }
@@ -80,7 +80,7 @@ void bluetooth_send_keyboard(report_keyboard_t *report)
 #ifdef BLUEFRUIT_TRACE_SERIAL
     bluefruit_trace_header();
 #endif
-    dprintf("Sending...\n");
+    dprintfmt("Sending...\n");
 
     send_str(PSTR("AT+BLEKEYBOARDCODE="));
 
@@ -144,7 +144,7 @@ void bluetooth_send_consumer(uint16_t usage)
     uint16_t bitmap = CONSUMER2BLUEFRUIT(usage);
 
 #ifdef BLUEFRUIT_TRACE_SERIAL
-    dprintf("\nData: %04X; bitmap: %04X\n", data, bitmap);
+    dprintfmt("\nData: %04X; bitmap: %04X\n", data, bitmap);
     bluefruit_trace_header();
 #endif
     send_str(PSTR("AT+BLEHIDCONTROLKEY=0x"));

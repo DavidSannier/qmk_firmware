@@ -42,7 +42,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     if (cnt++ == 1000) {
         cnt = 0;
         ec_dprint_matrix();
-        dprintf("\n");
+        dprintfmt("\n");
     }*/
 
     return updated;

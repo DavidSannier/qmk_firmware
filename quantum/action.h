@@ -138,7 +138,7 @@ void process_record_tap_hint(keyrecord_t *record);
 #ifdef ACTION_DEBUG
 #    include "debug.h"
 #    include "print.h"
-#    define ac_dprintf(...) dprintf(__VA_ARGS__)
+#    define ac_dprintf(...) dprintfmt(__VA_ARGS__)
 #else
 #    define ac_dprintf(...) \
         do {                \

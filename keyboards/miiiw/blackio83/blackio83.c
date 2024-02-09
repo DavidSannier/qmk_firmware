@@ -184,7 +184,7 @@ uint32_t loop_10Hz(uint32_t trigger_time, void *cb_arg) {
 
     static uint32_t debug_tick = 0;
 	if (debug_tick++ > 9 ) {
-        dprintf("trigger %d\n", trigger_time);
+        dprintfmt("trigger %d\n", trigger_time);
 		debug_tick = 0;
 	}
 

@@ -57,7 +57,7 @@ static void backlight_check_config(void) {
 void backlight_init(void) {
     backlight_config.raw = eeconfig_read_backlight();
     if (!backlight_config.valid) {
-        dprintf("backlight_init backlight_config.valid = 0. Write default values to EEPROM.\n");
+        dprintfmt("backlight_init backlight_config.valid = 0. Write default values to EEPROM.\n");
         eeconfig_update_backlight_default();
     }
     backlight_check_config();
@@ -75,7 +75,7 @@ void backlight_increase(void) {
     }
     backlight_config.enable = 1;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight increase: %u\n", backlight_config.level);
+    dprintfmt("backlight increase: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
 }
 
@@ -89,7 +89,7 @@ void backlight_decrease(void) {
         backlight_config.enable = !!backlight_config.level;
         eeconfig_update_backlight(backlight_config.raw);
     }
-    dprintf("backlight decrease: %u\n", backlight_config.level);
+    dprintfmt("backlight decrease: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
 }
 
@@ -99,7 +99,7 @@ void backlight_decrease(void) {
  */
 void backlight_toggle(void) {
     bool enabled = backlight_config.enable;
-    dprintf("backlight toggle: %u\n", enabled);
+    dprintfmt("backlight toggle: %u\n", enabled);
     if (enabled)
         backlight_disable();
     else
@@ -117,7 +117,7 @@ void backlight_enable(void) {
     if (backlight_config.raw == 1) // enabled but level == 0
         backlight_config.level = 1;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight enable\n");
+    dprintfmt("backlight enable\n");
     backlight_set(backlight_config.level);
 }
 
@@ -130,7 +130,7 @@ void backlight_disable(void) {
 
     backlight_config.enable = false;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight disable\n");
+    dprintfmt("backlight disable\n");
     backlight_set(0);
 }
 
@@ -153,7 +153,7 @@ void backlight_step(void) {
     }
     backlight_config.enable = !!backlight_config.level;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight step: %u\n", backlight_config.level);
+    dprintfmt("backlight step: %u\n", backlight_config.level);
     backlight_set(backlight_config.level);
 }
 
@@ -211,7 +211,7 @@ uint8_t get_backlight_level(void) {
  */
 void backlight_toggle_breathing(void) {
     bool breathing = backlight_config.breathing;
-    dprintf("backlight breathing toggle: %u\n", breathing);
+    dprintfmt("backlight breathing toggle: %u\n", breathing);
     if (breathing)
         backlight_disable_breathing();
     else
@@ -227,7 +227,7 @@ void backlight_enable_breathing(void) {
 
     backlight_config.breathing = true;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight breathing enable\n");
+    dprintfmt("backlight breathing enable\n");
     breathing_enable();
 }
 
@@ -240,7 +240,7 @@ void backlight_disable_breathing(void) {
 
     backlight_config.breathing = false;
     eeconfig_update_backlight(backlight_config.raw);
-    dprintf("backlight breathing disable\n");
+    dprintfmt("backlight breathing disable\n");
     breathing_disable();
 }
 

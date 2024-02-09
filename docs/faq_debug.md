@@ -45,7 +45,7 @@ After that you can use a few different print functions:
 * `print("string")`: Print a simple string.
 * `uprintf("%s string", var)`: Print a formatted string
 * `dprint("string")` Print a simple string, but only when debug mode is enabled
-* `dprintf("%s string", var)`: Print a formatted string, but only when debug mode is enabled
+* `dprintfmt("%s string", var)`: Print a formatted string, but only when debug mode is enabled
 
 ## Debug Examples
 

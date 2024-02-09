@@ -79,7 +79,7 @@ void sequencer_set_track_activation(uint8_t track, bool value) {
     } else {
         sequencer_internal_state.active_tracks &= ~(1 << track);
     }
-    dprintf("sequencer: track %d is %s\n", track, value ? "active" : "inactive");
+    dprintfmt("sequencer: track %d is %s\n", track, value ? "active" : "inactive");
 }
 
 void sequencer_toggle_track_activation(uint8_t track) {
@@ -109,9 +109,9 @@ void sequencer_set_step(uint8_t step, bool value) {
         } else {
             sequencer_config.steps[step] &= ~sequencer_internal_state.active_tracks;
         }
-        dprintf("sequencer: step %d is %s\n", step, value ? "on" : "off");
+        dprintfmt("sequencer: step %d is %s\n", step, value ? "on" : "off");
     } else {
-        dprintf("sequencer: step %d is out of range\n", step);
+        dprintfmt("sequencer: step %d is out of range\n", step);
     }
 }
 
@@ -131,7 +131,7 @@ void sequencer_set_all_steps(bool value) {
             sequencer_config.steps[step] &= ~sequencer_internal_state.active_tracks;
         }
     }
-    dprintf("sequencer: all steps are %s\n", value ? "on" : "off");
+    dprintfmt("sequencer: all steps are %s\n", value ? "on" : "off");
 }
 
 uint8_t sequencer_get_tempo(void) {
@@ -141,7 +141,7 @@ uint8_t sequencer_get_tempo(void) {
 void sequencer_set_tempo(uint8_t tempo) {
     if (tempo > 0) {
         sequencer_config.tempo = tempo;
-        dprintf("sequencer: tempo set to %d bpm\n", tempo);
+        dprintfmt("sequencer: tempo set to %d bpm\n", tempo);
     } else {
         dprintln("sequencer: cannot set tempo to 0");
     }
@@ -152,7 +152,7 @@ void sequencer_increase_tempo(void) {
     if (sequencer_config.tempo < UINT8_MAX) {
         sequencer_set_tempo(sequencer_config.tempo + 1);
     } else {
-        dprintf("sequencer: cannot set tempo above %d\n", UINT8_MAX);
+        dprintfmt("sequencer: cannot set tempo above %d\n", UINT8_MAX);
     }
 }
 
@@ -167,9 +167,9 @@ sequencer_resolution_t sequencer_get_resolution(void) {
 void sequencer_set_resolution(sequencer_resolution_t resolution) {
     if (resolution >= 0 && resolution < SEQUENCER_RESOLUTIONS) {
         sequencer_config.resolution = resolution;
-        dprintf("sequencer: resolution set to %d\n", resolution);
+        dprintfmt("sequencer: resolution set to %d\n", resolution);
     } else {
-        dprintf("sequencer: resolution %d is out of range\n", resolution);
+        dprintfmt("sequencer: resolution %d is out of range\n", resolution);
     }
 }
 
@@ -186,8 +186,8 @@ uint8_t sequencer_get_current_step(void) {
 }
 
 void sequencer_phase_attack(void) {
-    dprintf("sequencer: step %d\n", sequencer_internal_state.current_step);
-    dprintf("sequencer: time %d\n", timer_read());
+    dprintfmt("sequencer: step %d\n", sequencer_internal_state.current_step);
+    dprintfmt("sequencer: time %d\n", timer_read());
 
     if (sequencer_internal_state.current_track == 0) {
         sequencer_internal_state.timer = timer_read();

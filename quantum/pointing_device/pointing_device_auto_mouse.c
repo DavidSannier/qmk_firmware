@@ -394,7 +394,7 @@ bool process_auto_mouse(uint16_t keycode, keyrecord_t* record) {
     }
     if (auto_mouse_context.status.mouse_key_tracker < 0) {
         auto_mouse_context.status.mouse_key_tracker = 0;
-        dprintf("key tracker error (<0) \n");
+        dprintfmt("key tracker error (<0) \n");
     }
     return true;
 }

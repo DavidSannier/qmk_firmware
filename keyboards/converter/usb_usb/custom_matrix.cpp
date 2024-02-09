@@ -156,9 +156,9 @@ extern "C" {
 
             changed = true;
 
-            dprintf("state:  %02X %02X", local_keyboard_report.mods, local_keyboard_report.reserved);
+            dprintfmt("state:  %02X %02X", local_keyboard_report.mods, local_keyboard_report.reserved);
             for (uint8_t i = 0; i < KEYBOARD_REPORT_KEYS; i++) {
-                dprintf(" %02X", local_keyboard_report.keys[i]);
+                dprintfmt(" %02X", local_keyboard_report.keys[i]);
             }
             dprint("\r\n");
         }
@@ -168,17 +168,17 @@ extern "C" {
         usb_host.Task();
         timer = timer_elapsed(timer);
         if (timer > 100) {
-            dprintf("host.Task: %d\n", timer);
+            dprintfmt("host.Task: %d\n", timer);
         }
 
         static uint8_t usb_state = 0;
         if (usb_state != usb_host.getUsbTaskState()) {
             usb_state = usb_host.getUsbTaskState();
-            dprintf("usb_state: %02X\n", usb_state);
+            dprintfmt("usb_state: %02X\n", usb_state);
 
             // restore LED state when keyboard comes up
             if (usb_state == USB_STATE_RUNNING) {
-                dprintf("speed: %s\n", usb_host.getVbusState()==FSHOST ? "full" : "low");
+                dprintfmt("speed: %s\n", usb_host.getVbusState()==FSHOST ? "full" : "low");
                 led_set(host_keyboard_leds());
             }
         }

@@ -67,31 +67,31 @@ static void send_msg(uint16_t keycode, bool pressed) {
 
 static inline void print_message_buffer(void) {
   for (int i=0; i<UART_MSG_LEN; i++) {
-    dprintf("msg[%u]: 0x%02X\n", i, msg[i]);
+    dprintfmt("msg[%u]: 0x%02X\n", i, msg[i]);
   }
 }
 
 static void process_uart(void) {
   uint8_t chksum = chksum8(msg, UART_MSG_LEN-1);
   if (msg[IDX_PREAMBLE] != UART_PREAMBLE || msg[IDX_CHECKSUM] != chksum) {
-     dprintf("UART checksum mismatch!\n");
+     dprintfmt("UART checksum mismatch!\n");
      print_message_buffer();
-     dprintf("calc checksum: 0x%02X\n", chksum);
+     dprintfmt("calc checksum: 0x%02X\n", chksum);
   } else {
     uint16_t keycode = (uint16_t)msg[IDX_KCLSB] | ((uint16_t)msg[IDX_KCMSB] << 8);
     bool pressed = (bool)msg[IDX_PRESSED];
     if (IS_RM_KC(keycode)) {
       keyrecord_t record;
       record.event.pressed = pressed;
-      if (pressed) dprintf("Remote macro: press [%u]\n", keycode);
-      else dprintf("Remote macro: release [%u]\n", keycode);
+      if (pressed) dprintfmt("Remote macro: press [%u]\n", keycode);
+      else dprintfmt("Remote macro: release [%u]\n", keycode);
       process_record_user(keycode, &record);
     } else {
       if (pressed) {
-        dprintf("Remote: press [%u]\n", keycode);
+        dprintfmt("Remote: press [%u]\n", keycode);
         register_code(keycode);
     } else {
-        dprintf("Remote: release [%u]\n", keycode);
+        dprintfmt("Remote: release [%u]\n", keycode);
         unregister_code(keycode);
       }
     }
@@ -101,9 +101,9 @@ static void process_uart(void) {
 static void get_msg(void) {
   while (uart_available()) {
     msg[msg_idx] = uart_read();
-    dprintf("idx: %u, recv: 0x%002X\n", msg_idx, msg[msg_idx]);
+    dprintfmt("idx: %u, recv: 0x%002X\n", msg_idx, msg[msg_idx]);
     if (msg_idx == 0 && (msg[msg_idx] != UART_PREAMBLE)) {
-      dprintf("Byte sync error!\n");
+      dprintfmt("Byte sync error!\n");
       msg_idx = 0;
     } else if (msg_idx == (UART_MSG_LEN-1)) {
       process_uart();
@@ -129,7 +129,7 @@ static void handle_remote_incoming(void) {
 
 static void handle_remote_outgoing(uint16_t keycode, keyrecord_t *record) {
   if (IS_HID_KC(keycode) || IS_RM_KC(keycode)) {
-    dprintf("Remote: send [%u]\n", keycode);
+    dprintfmt("Remote: send [%u]\n", keycode);
     send_msg(keycode, record->event.pressed);
   }
 }

@@ -63,7 +63,7 @@ uint32_t lastTime = 0;
 
 void matrix_init_user(void) {
   if (!initialized){
-      dprintf("Initializing in matrix_scan_user");
+      dprintfmt("Initializing in matrix_scan_user");
       rgblight_enable();
       reset_rgb();
       initialized = 1;

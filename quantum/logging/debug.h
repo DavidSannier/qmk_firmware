@@ -54,14 +54,14 @@ extern debug_config_t debug_config;
  * Debug print utils
  */
 #ifndef NO_DEBUG
-#    define dprintf(fmt, ...)                                     \
+#    define dprintfmt(fmt, ...)                                     \
         do {                                                      \
             if (debug_config.enable) xprintf(fmt, ##__VA_ARGS__); \
         } while (0)
 #else /* NO_DEBUG */
-#    define dprintf(fmt, ...)
+#    define dprintfmt(fmt, ...)
 #endif /* NO_DEBUG */
 
-#define dprint(s) dprintf(s)
-#define dprintln(s) dprintf(s "\r\n")
-#define dmsg(s) dprintf("%s at %d: %s\n", __FILE__, __LINE__, s)
+#define dprint(s) dprintfmt(s)
+#define dprintln(s) dprintfmt(s "\r\n")
+#define dmsg(s) dprintfmt("%s at %d: %s\n", __FILE__, __LINE__, s)

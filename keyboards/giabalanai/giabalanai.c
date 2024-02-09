@@ -160,7 +160,7 @@ void my_process_midi4Bass(uint8_t channel, keyrecord_t *record,
                 midi_send_noteon(&midi_device, channel, note, velocity);
                 midi_send_noteon(&midi_device, channel, note + 12, velocity);  // +1 Octave
             }
-            dprintf("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
+            dprintfmt("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
             chord_status[chord] = note;  // store root_note status.
         }
     } else {
@@ -172,7 +172,7 @@ void my_process_midi4Bass(uint8_t channel, keyrecord_t *record,
                 midi_send_noteoff(&midi_device, channel, note, velocity);
                 midi_send_noteoff(&midi_device, channel, note + 12, velocity);  // +1 Octave
             }
-            dprintf("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
+            dprintfmt("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
         }
         chord_status[chord] = MIDI_INVALID_NOTE;
     }
@@ -188,7 +188,7 @@ void my_process_midi4TriadChords(uint8_t channel, keyrecord_t *record,
             midi_send_noteon(&midi_device, channel, note + offset1, velocity);
             midi_send_noteon(&midi_device, channel, note + offset2, velocity);
             midi_send_noteon(&midi_device, channel, note + offset3, velocity);
-            dprintf("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
+            dprintfmt("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
             chord_status[chord] = note;  // store root_note status.
         }
     } else {
@@ -197,7 +197,7 @@ void my_process_midi4TriadChords(uint8_t channel, keyrecord_t *record,
             midi_send_noteoff(&midi_device, channel, note + offset1, velocity);
             midi_send_noteoff(&midi_device, channel, note + offset2, velocity);
             midi_send_noteoff(&midi_device, channel, note + offset3, velocity);
-            dprintf("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
+            dprintfmt("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
         }
     chord_status[chord] = MIDI_INVALID_NOTE;
     }
@@ -222,14 +222,14 @@ void my_process_midi(uint8_t channel, uint16_t keycode, keyrecord_t *record, uin
         if (my_tone_status[tone] == MIDI_INVALID_NOTE) {
             uint8_t note = midi_compute_note(keycode);
             midi_send_noteon(&midi_device, channel, note + offset, melody_unison_velocity);
-            dprintf("midi noteon channel:%d note:%d tone:%d velocity:%d\n", channel, note, tone, melody_unison_velocity);
+            dprintfmt("midi noteon channel:%d note:%d tone:%d velocity:%d\n", channel, note, tone, melody_unison_velocity);
             my_tone_status[tone] = note;  // store root_note status.
         }
     } else {
         uint8_t note = my_tone_status[tone];
         if (note != MIDI_INVALID_NOTE) {
             midi_send_noteoff(&midi_device, channel, note + offset, melody_unison_velocity);
-            dprintf("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, melody_unison_velocity);
+            dprintfmt("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, melody_unison_velocity);
         }
     my_tone_status[tone] = MIDI_INVALID_NOTE;
     }

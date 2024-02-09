@@ -31,7 +31,7 @@ enum spleeb_enc_mode {
 };
 
 void spleeb_encoder_mode_trigger(uint8_t mode, bool clockwise) {
-    dprintf("spleeb_encoder_mode_trigger m: %u, c: %u\n", mode, clockwise);
+    dprintfmt("spleeb_encoder_mode_trigger m: %u, c: %u\n", mode, clockwise);
     switch (mode) {
         case DEF_DPI:
             spleeb_cycle_pointer_default_dpi(clockwise);

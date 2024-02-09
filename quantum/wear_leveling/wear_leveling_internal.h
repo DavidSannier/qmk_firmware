@@ -29,16 +29,16 @@ typedef uint64_t backing_store_int_t;
 
 #ifdef WEAR_LEVELING_DEBUG_OUTPUT
 #    include <debug.h>
-#    define bs_dprintf(...) dprintf("Backing store: " __VA_ARGS__)
-#    define wl_dprintf(...) dprintf("Wear leveling: " __VA_ARGS__)
+#    define bs_dprintf(...) dprintfmt("Backing store: " __VA_ARGS__)
+#    define wl_dprintf(...) dprintfmt("Wear leveling: " __VA_ARGS__)
 #    define wl_dump(address, value, length)             \
         do {                                            \
-            dprintf("[0x%04X]: ", (int)(address));      \
+            dprintfmt("[0x%04X]: ", (int)(address));      \
             const uint8_t* p = (const uint8_t*)(value); \
             for (int i = 0; i < (length); ++i) {        \
-                dprintf(" %02X", (int)p[i]);            \
+                dprintfmt(" %02X", (int)p[i]);            \
             }                                           \
-            dprintf("\n");                              \
+            dprintfmt("\n");                              \
         } while (0)
 #else
 #    define wl_dprintf(...) \

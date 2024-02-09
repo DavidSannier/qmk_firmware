@@ -87,7 +87,7 @@ uint8_t matrix_scan(void)
 
     uint8_t code;
     if ((code = ps2_host_recv())) {
-        dprintf("r%02X ", code);
+        dprintfmt("r%02X ", code);
     }
 
     switch (state) {
@@ -138,7 +138,7 @@ uint8_t matrix_scan(void)
                     if (code < 0x88) {
                         matrix_make(code);
                     } else {
-                        dprintf("unexpected scan code at READY: %02X\n", code);
+                        dprintfmt("unexpected scan code at READY: %02X\n", code);
                     }
                     state = READY;
                     dprint("\n");
@@ -152,7 +152,7 @@ uint8_t matrix_scan(void)
                     if (code < 0x88) {
                         matrix_break(code);
                     } else {
-                        dprintf("unexpected scan code at F0: %02X\n", code);
+                        dprintfmt("unexpected scan code at F0: %02X\n", code);
                     }
                     state = READY;
                     dprint("\n");

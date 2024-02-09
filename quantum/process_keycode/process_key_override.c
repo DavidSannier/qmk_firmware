@@ -524,7 +524,7 @@ bool process_key_override(const uint16_t keycode, const keyrecord_t *const recor
 #ifdef BENCH_KEY_OVERRIDE
     uint16_t elapsed = timer_elapsed(start);
 
-    dprintf("Processing key overrides took: %u ms\n", elapsed);
+    dprintfmt("Processing key overrides took: %u ms\n", elapsed);
 #endif
 
     return send_key_action;

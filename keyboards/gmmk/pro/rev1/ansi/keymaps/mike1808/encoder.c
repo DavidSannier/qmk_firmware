@@ -41,7 +41,7 @@ void volume_up(void) { tap_code(KC_VOLU); }
 void volume_down(void) { tap_code(KC_VOLD); }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    dprintf("current encoder state is: %d\n", state);
+    dprintfmt("current encoder state is: %d\n", state);
 
     if (clockwise) {
         (*encoder_mapping[state][0])();
@@ -54,7 +54,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 void handle_rgb_key(bool pressed) {
-    dprintf("handle_rgb_key %d\f", pressed);
+    dprintfmt("handle_rgb_key %d\f", pressed);
 
     if (pressed) {
         rgb_matrix_layers_disable();

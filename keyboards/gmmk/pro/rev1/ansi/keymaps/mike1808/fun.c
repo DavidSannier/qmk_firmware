@@ -22,7 +22,7 @@ static uint8_t rgb_mode;
 bool rgb_matrix_indicators_keymap(void) {
     if (wpm_rgb_enabled && rgb_matrix_is_enabled()) {
         uint8_t wpm = get_current_wpm();
-        dprintf("WPM = %d\n", wpm);
+        dprintfmt("WPM = %d\n", wpm);
         HSV hsv = rgb_matrix_get_hsv();
         hsv.h = wpm;
         RGB rgb = hsv_to_rgb(hsv);

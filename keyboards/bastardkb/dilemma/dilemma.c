@@ -243,7 +243,7 @@ static bool has_shift_mod(void) {
  */
 static void debug_dilemma_config_to_console(dilemma_config_t* config) {
 #    ifdef CONSOLE_ENABLE
-    dprintf("(dilemma) process_record_kb: config = {\n"
+    dprintfmt("(dilemma) process_record_kb: config = {\n"
             "\traw = 0x%X,\n"
             "\t{\n"
             "\t\tis_dragscroll_enabled=%u\n"

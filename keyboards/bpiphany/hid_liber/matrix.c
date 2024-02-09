@@ -196,7 +196,7 @@ uint8_t matrix_scan(void)
             if (prev_bit != curr_bit) {
                 matrix_debouncing[row] ^= ((matrix_row_t)1<<col);
                 if (debouncing) {
-                    dprintf("bounce!: %02X\n", debouncing);
+                    dprintfmt("bounce!: %02X\n", debouncing);
                 }
                 debouncing = DEBOUNCE;
             }

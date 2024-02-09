@@ -30,7 +30,7 @@ bool initialized = 0;
 
 void matrix_init_user(void) {
   if (!initialized){
-      dprintf("Initializing in matrix_scan_user");
+      dprintfmt("Initializing in matrix_scan_user");
       rgblight_enable();
       rgblight_mode(7);
       rgblight_sethsv(0,255,255);

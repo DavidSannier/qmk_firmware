@@ -79,14 +79,14 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
                 if (tone_status[tone] == MIDI_INVALID_NOTE) {
                     uint8_t note = midi_compute_note(keycode);
                     midi_send_noteon(&midi_device, channel, note, velocity);
-                    dprintf("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
+                    dprintfmt("midi noteon channel:%d note:%d velocity:%d\n", channel, note, velocity);
                     tone_status[tone] = note;
                 }
             } else {
                 uint8_t note = tone_status[tone];
                 if (note != MIDI_INVALID_NOTE) {
                     midi_send_noteoff(&midi_device, channel, note, velocity);
-                    dprintf("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
+                    dprintfmt("midi noteoff channel:%d note:%d velocity:%d\n", channel, note, velocity);
                 }
                 tone_status[tone] = MIDI_INVALID_NOTE;
             }
@@ -95,31 +95,31 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
         case MIDI_OCTAVE_MIN ... MIDI_OCTAVE_MAX:
             if (record->event.pressed) {
                 midi_config.octave = keycode - MIDI_OCTAVE_MIN;
-                dprintf("midi octave %d\n", midi_config.octave);
+                dprintfmt("midi octave %d\n", midi_config.octave);
             }
             return false;
         case QK_MIDI_OCTAVE_DOWN:
             if (record->event.pressed && midi_config.octave > 0) {
                 midi_config.octave--;
-                dprintf("midi octave %d\n", midi_config.octave);
+                dprintfmt("midi octave %d\n", midi_config.octave);
             }
             return false;
         case QK_MIDI_OCTAVE_UP:
             if (record->event.pressed && midi_config.octave < (MIDI_OCTAVE_MAX - MIDI_OCTAVE_MIN)) {
                 midi_config.octave++;
-                dprintf("midi octave %d\n", midi_config.octave);
+                dprintfmt("midi octave %d\n", midi_config.octave);
             }
             return false;
         case MIDI_TRANSPOSE_MIN ... MIDI_TRANSPOSE_MAX:
             if (record->event.pressed) {
                 midi_config.transpose = keycode - QK_MIDI_TRANSPOSE_0;
-                dprintf("midi transpose %d\n", midi_config.transpose);
+                dprintfmt("midi transpose %d\n", midi_config.transpose);
             }
             return false;
         case QK_MIDI_TRANSPOSE_DOWN:
             if (record->event.pressed && midi_config.transpose > (MIDI_TRANSPOSE_MIN - QK_MIDI_TRANSPOSE_0)) {
                 midi_config.transpose--;
-                dprintf("midi transpose %d\n", midi_config.transpose);
+                dprintfmt("midi transpose %d\n", midi_config.transpose);
             }
             return false;
         case QK_MIDI_TRANSPOSE_UP:
@@ -127,13 +127,13 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
                 const bool positive = midi_config.transpose > 0;
                 midi_config.transpose++;
                 if (positive && midi_config.transpose < 0) midi_config.transpose--;
-                dprintf("midi transpose %d\n", midi_config.transpose);
+                dprintfmt("midi transpose %d\n", midi_config.transpose);
             }
             return false;
         case MIDI_VELOCITY_MIN ... MIDI_VELOCITY_MAX:
             if (record->event.pressed) {
                 midi_config.velocity = compute_velocity(keycode - MIDI_VELOCITY_MIN);
-                dprintf("midi velocity %d\n", midi_config.velocity);
+                dprintfmt("midi velocity %d\n", midi_config.velocity);
             }
             return false;
         case QK_MIDI_VELOCITY_DOWN:
@@ -146,7 +146,7 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
                     midi_config.velocity = 0;
                 }
 
-                dprintf("midi velocity %d\n", midi_config.velocity);
+                dprintfmt("midi velocity %d\n", midi_config.velocity);
             }
             return false;
         case QK_MIDI_VELOCITY_UP:
@@ -156,52 +156,52 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     midi_config.velocity = 127;
                 }
-                dprintf("midi velocity %d\n", midi_config.velocity);
+                dprintfmt("midi velocity %d\n", midi_config.velocity);
             }
             return false;
         case MIDI_CHANNEL_MIN ... MIDI_CHANNEL_MAX:
             if (record->event.pressed) {
                 midi_config.channel = keycode - MIDI_CHANNEL_MIN;
-                dprintf("midi channel %d\n", midi_config.channel);
+                dprintfmt("midi channel %d\n", midi_config.channel);
             }
             return false;
         case QK_MIDI_CHANNEL_DOWN:
             if (record->event.pressed) {
                 midi_config.channel--;
-                dprintf("midi channel %d\n", midi_config.channel);
+                dprintfmt("midi channel %d\n", midi_config.channel);
             }
             return false;
         case QK_MIDI_CHANNEL_UP:
             if (record->event.pressed) {
                 midi_config.channel++;
-                dprintf("midi channel %d\n", midi_config.channel);
+                dprintfmt("midi channel %d\n", midi_config.channel);
             }
             return false;
         case QK_MIDI_ALL_NOTES_OFF:
             if (record->event.pressed) {
                 midi_send_cc(&midi_device, midi_config.channel, 0x7B, 0);
-                dprintf("midi all notes off\n");
+                dprintfmt("midi all notes off\n");
             }
             return false;
         case QK_MIDI_SUSTAIN:
             midi_send_cc(&midi_device, midi_config.channel, 0x40, record->event.pressed ? 127 : 0);
-            dprintf("midi sustain %d\n", record->event.pressed);
+            dprintfmt("midi sustain %d\n", record->event.pressed);
             return false;
         case QK_MIDI_PORTAMENTO:
             midi_send_cc(&midi_device, midi_config.channel, 0x41, record->event.pressed ? 127 : 0);
-            dprintf("midi portamento %d\n", record->event.pressed);
+            dprintfmt("midi portamento %d\n", record->event.pressed);
             return false;
         case QK_MIDI_SOSTENUTO:
             midi_send_cc(&midi_device, midi_config.channel, 0x42, record->event.pressed ? 127 : 0);
-            dprintf("midi sostenuto %d\n", record->event.pressed);
+            dprintfmt("midi sostenuto %d\n", record->event.pressed);
             return false;
         case QK_MIDI_SOFT:
             midi_send_cc(&midi_device, midi_config.channel, 0x43, record->event.pressed ? 127 : 0);
-            dprintf("midi soft %d\n", record->event.pressed);
+            dprintfmt("midi soft %d\n", record->event.pressed);
             return false;
         case QK_MIDI_LEGATO:
             midi_send_cc(&midi_device, midi_config.channel, 0x44, record->event.pressed ? 127 : 0);
-            dprintf("midi legato %d\n", record->event.pressed);
+            dprintfmt("midi legato %d\n", record->event.pressed);
             return false;
         case QK_MIDI_MODULATION:
             midi_modulation_step = record->event.pressed ? 1 : -1;
@@ -211,31 +211,31 @@ bool process_midi(uint16_t keycode, keyrecord_t *record) {
                 midi_config.modulation_interval++;
                 // prevent overflow
                 if (midi_config.modulation_interval == 0) midi_config.modulation_interval--;
-                dprintf("midi modulation interval %d\n", midi_config.modulation_interval);
+                dprintfmt("midi modulation interval %d\n", midi_config.modulation_interval);
             }
             return false;
         case QK_MIDI_MODULATION_SPEED_UP:
             if (record->event.pressed && midi_config.modulation_interval > 0) {
                 midi_config.modulation_interval--;
-                dprintf("midi modulation interval %d\n", midi_config.modulation_interval);
+                dprintfmt("midi modulation interval %d\n", midi_config.modulation_interval);
             }
             return false;
         case QK_MIDI_PITCH_BEND_DOWN:
             if (record->event.pressed) {
                 midi_send_pitchbend(&midi_device, midi_config.channel, -0x2000);
-                dprintf("midi pitchbend channel:%d amount:%d\n", midi_config.channel, -0x2000);
+                dprintfmt("midi pitchbend channel:%d amount:%d\n", midi_config.channel, -0x2000);
             } else {
                 midi_send_pitchbend(&midi_device, midi_config.channel, 0);
-                dprintf("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0);
+                dprintfmt("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0);
             }
             return false;
         case QK_MIDI_PITCH_BEND_UP:
             if (record->event.pressed) {
                 midi_send_pitchbend(&midi_device, midi_config.channel, 0x1fff);
-                dprintf("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0x1fff);
+                dprintfmt("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0x1fff);
             } else {
                 midi_send_pitchbend(&midi_device, midi_config.channel, 0);
-                dprintf("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0);
+                dprintfmt("midi pitchbend channel:%d amount:%d\n", midi_config.channel, 0);
             }
             return false;
     };
@@ -252,7 +252,7 @@ void midi_task(void) {
     midi_modulation_timer = timer_read();
 
     if (midi_modulation_step != 0) {
-        dprintf("midi modulation %d\n", midi_modulation);
+        dprintfmt("midi modulation %d\n", midi_modulation);
         midi_send_cc(&midi_device, midi_config.channel, 0x1, midi_modulation);
 
         if (midi_modulation_step < 0 && midi_modulation < -midi_modulation_step) {

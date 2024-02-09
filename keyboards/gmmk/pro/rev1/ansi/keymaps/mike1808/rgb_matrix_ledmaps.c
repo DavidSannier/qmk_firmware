@@ -59,12 +59,12 @@ void set_layer_rgb(uint8_t led_min, uint8_t led_max, int layer) {
 }
 
 void rgb_matrix_layers_enable(void) {
-    dprintf("ledmaps are enabled\n");
+    dprintfmt("ledmaps are enabled\n");
     enabled = true;
 }
 
 void rgb_matrix_layers_disable(void) {
-    dprintf("ledmaps are disabled\n");
+    dprintfmt("ledmaps are disabled\n");
     enabled = false;
 }
 

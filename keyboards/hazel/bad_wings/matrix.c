@@ -37,7 +37,7 @@ void sr_74hc595_spi_stop(void) {
 
 bool sr_74hc595_spi_start(void) {
     if (!spi_start(SHIFTREG_MATRIX_COL_CS, false, 0, SHIFTREG_DIVISOR)) {
-        dprintf("74hc595 matrix: failed to start spi\n");
+        dprintfmt("74hc595 matrix: failed to start spi\n");
         sr_74hc595_spi_stop();
         return false;
     }
@@ -69,7 +69,7 @@ void clearColumns(void) {
 void setColumn(int columnShift, bool test_run) {
     uint8_t columnShiftByte = ((uint8_t)1 << columnShift);
     if(test_run) {
-        dprintf("byte sent: %d\n", columnShiftByte);
+        dprintfmt("byte sent: %d\n", columnShiftByte);
     }
     sr_74hc595_spi_send_byte(columnShiftByte);
 }
@@ -111,7 +111,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     // Loop through the columns, activating one at a time, and read the rows, and place in the new current_matrix
     for (int c = 0; c < SHIFTREG_COLS; c++) {
         if (debug_output) {
-            dprintf("column iteration: %d\n", c);
+            dprintfmt("column iteration: %d\n", c);
         }
         setColumn(c, debug_output);
         matrix_io_delay();

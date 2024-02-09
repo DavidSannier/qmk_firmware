@@ -104,7 +104,7 @@ void eeprom_driver_erase(void) {
     }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-    dprintf("EEPROM erase took %ldms to complete\n", ((long)(timer_read32() - start)));
+    dprintfmt("EEPROM erase took %ldms to complete\n", ((long)(timer_read32() - start)));
 #endif
 }
 
@@ -134,11 +134,11 @@ void eeprom_read_block(void *buf, const void *addr, size_t len) {
     spi_receive(buf, len);
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-    dprintf("[EEPROM R] 0x%08lX: ", ((uint32_t)(uintptr_t)addr));
+    dprintfmt("[EEPROM R] 0x%08lX: ", ((uint32_t)(uintptr_t)addr));
     for (size_t i = 0; i < len; ++i) {
-        dprintf(" %02X", (int)(((uint8_t *)buf)[i]));
+        dprintfmt(" %02X", (int)(((uint8_t *)buf)[i]));
     }
-    dprintf("\n");
+    dprintfmt("\n");
 #endif // DEBUG_EEPROM_OUTPUT
 
     spi_stop();
@@ -187,11 +187,11 @@ void eeprom_write_block(const void *buf, void *addr, size_t len) {
         }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
-        dprintf("[EEPROM W] 0x%08lX: ", ((uint32_t)(uintptr_t)target_addr));
+        dprintfmt("[EEPROM W] 0x%08lX: ", ((uint32_t)(uintptr_t)target_addr));
         for (size_t i = 0; i < write_length; i++) {
-            dprintf(" %02X", (int)(uint8_t)(read_buf[i]));
+            dprintfmt(" %02X", (int)(uint8_t)(read_buf[i]));
         }
-        dprintf("\n");
+        dprintfmt("\n");
 #endif // DEBUG_EEPROM_OUTPUT
 
         spi_write(CMD_WRITE);

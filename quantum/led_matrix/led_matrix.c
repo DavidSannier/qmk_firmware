@@ -93,7 +93,7 @@ void eeconfig_update_led_matrix(void) {
 }
 
 void eeconfig_update_led_matrix_default(void) {
-    dprintf("eeconfig_update_led_matrix_default\n");
+    dprintfmt("eeconfig_update_led_matrix_default\n");
     led_matrix_eeconfig.enable = LED_MATRIX_DEFAULT_ON;
     led_matrix_eeconfig.mode   = LED_MATRIX_DEFAULT_MODE;
     led_matrix_eeconfig.val    = LED_MATRIX_DEFAULT_VAL;
@@ -103,12 +103,12 @@ void eeconfig_update_led_matrix_default(void) {
 }
 
 void eeconfig_debug_led_matrix(void) {
-    dprintf("led_matrix_eeconfig EEPROM\n");
-    dprintf("led_matrix_eeconfig.enable = %d\n", led_matrix_eeconfig.enable);
-    dprintf("led_matrix_eeconfig.mode = %d\n", led_matrix_eeconfig.mode);
-    dprintf("led_matrix_eeconfig.val = %d\n", led_matrix_eeconfig.val);
-    dprintf("led_matrix_eeconfig.speed = %d\n", led_matrix_eeconfig.speed);
-    dprintf("led_matrix_eeconfig.flags = %d\n", led_matrix_eeconfig.flags);
+    dprintfmt("led_matrix_eeconfig EEPROM\n");
+    dprintfmt("led_matrix_eeconfig.enable = %d\n", led_matrix_eeconfig.enable);
+    dprintfmt("led_matrix_eeconfig.mode = %d\n", led_matrix_eeconfig.mode);
+    dprintfmt("led_matrix_eeconfig.val = %d\n", led_matrix_eeconfig.val);
+    dprintfmt("led_matrix_eeconfig.speed = %d\n", led_matrix_eeconfig.speed);
+    dprintfmt("led_matrix_eeconfig.flags = %d\n", led_matrix_eeconfig.flags);
 }
 
 void led_matrix_reload_from_eeprom(void) {
@@ -427,7 +427,7 @@ void led_matrix_init(void) {
 
     eeconfig_init_led_matrix();
     if (!led_matrix_eeconfig.mode) {
-        dprintf("led_matrix_init_drivers led_matrix_eeconfig.mode = 0. Write default values to EEPROM.\n");
+        dprintfmt("led_matrix_init_drivers led_matrix_eeconfig.mode = 0. Write default values to EEPROM.\n");
         eeconfig_update_led_matrix_default();
     }
     eeconfig_debug_led_matrix(); // display current eeprom values
@@ -451,7 +451,7 @@ void led_matrix_toggle_eeprom_helper(bool write_to_eeprom) {
     led_matrix_eeconfig.enable ^= 1;
     led_task_state = STARTING;
     eeconfig_flag_led_matrix(write_to_eeprom);
-    dprintf("led matrix toggle [%s]: led_matrix_eeconfig.enable = %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.enable);
+    dprintfmt("led matrix toggle [%s]: led_matrix_eeconfig.enable = %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.enable);
 }
 void led_matrix_toggle_noeeprom(void) {
     led_matrix_toggle_eeprom_helper(false);
@@ -497,7 +497,7 @@ void led_matrix_mode_eeprom_helper(uint8_t mode, bool write_to_eeprom) {
     }
     led_task_state = STARTING;
     eeconfig_flag_led_matrix(write_to_eeprom);
-    dprintf("led matrix mode [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.mode);
+    dprintfmt("led matrix mode [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.mode);
 }
 void led_matrix_mode_noeeprom(uint8_t mode) {
     led_matrix_mode_eeprom_helper(mode, false);
@@ -538,7 +538,7 @@ void led_matrix_set_val_eeprom_helper(uint8_t val, bool write_to_eeprom) {
     }
     led_matrix_eeconfig.val = (val > LED_MATRIX_MAXIMUM_BRIGHTNESS) ? LED_MATRIX_MAXIMUM_BRIGHTNESS : val;
     eeconfig_flag_led_matrix(write_to_eeprom);
-    dprintf("led matrix set val [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.val);
+    dprintfmt("led matrix set val [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.val);
 }
 void led_matrix_set_val_noeeprom(uint8_t val) {
     led_matrix_set_val_eeprom_helper(val, false);
@@ -574,7 +574,7 @@ void led_matrix_decrease_val(void) {
 void led_matrix_set_speed_eeprom_helper(uint8_t speed, bool write_to_eeprom) {
     led_matrix_eeconfig.speed = speed;
     eeconfig_flag_led_matrix(write_to_eeprom);
-    dprintf("led matrix set speed [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.speed);
+    dprintfmt("led matrix set speed [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.speed);
 }
 void led_matrix_set_speed_noeeprom(uint8_t speed) {
     led_matrix_set_speed_eeprom_helper(speed, false);
@@ -610,7 +610,7 @@ void led_matrix_decrease_speed(void) {
 void led_matrix_set_flags_eeprom_helper(led_flags_t flags, bool write_to_eeprom) {
     led_matrix_eeconfig.flags = flags;
     eeconfig_flag_led_matrix(write_to_eeprom);
-    dprintf("led matrix set flags [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.flags);
+    dprintfmt("led matrix set flags [%s]: %u\n", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", led_matrix_eeconfig.flags);
 }
 
 led_flags_t led_matrix_get_flags(void) {

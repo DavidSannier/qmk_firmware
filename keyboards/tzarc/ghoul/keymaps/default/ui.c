@@ -92,7 +92,7 @@ void ui_task(void) {
         static int counter = 0;
         counter            = (counter + 1) % 2500;
         if (counter == 0) {
-            dprintf("Current: %dmA (%d) -- Voltage: %dmV (%d)\n", (int)current_ma, (int)current, (int)voltage_mv, (int)voltage);
+            dprintfmt("Current: %dmA (%d) -- Voltage: %dmV (%d)\n", (int)current_ma, (int)current, (int)voltage_mv, (int)voltage);
         }
 
         last_read = timer_read32();

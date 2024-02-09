@@ -239,7 +239,7 @@ static void resp_buf_read_one(bool greedy) {
             if (!msg.more) {
                 // We got it; consume this entry
                 resp_buf.get(last_send);
-                dprintf("recv latency %dms\n", TIMER_DIFF_16(timer_read(), last_send));
+                dprintfmt("recv latency %dms\n", TIMER_DIFF_16(timer_read(), last_send));
             }
 
             if (greedy && resp_buf.peek(last_send) && readPin(BLUEFRUIT_LE_IRQ_PIN)) {
@@ -248,7 +248,7 @@ static void resp_buf_read_one(bool greedy) {
         }
 
     } else if (timer_elapsed(last_send) > SdepTimeout * 2) {
-        dprintf("waiting_for_result: timeout, resp_buf size %d\n", (int)resp_buf.size());
+        dprintfmt("waiting_for_result: timeout, resp_buf size %d\n", (int)resp_buf.size());
 
         // Timed out: consume this entry
         resp_buf.get(last_send);
@@ -269,7 +269,7 @@ static void send_buf_send_one(uint16_t timeout = SdepTimeout) {
     if (process_queue_item(&item, timeout)) {
         // commit that peek
         send_buf.get(item);
-        dprintf("send_buf_send_one: have %d remaining\n", (int)send_buf.size());
+        dprintfmt("send_buf_send_one: have %d remaining\n", (int)send_buf.size());
     } else {
         dprint("failed to send, will retry\n");
         wait_ms(SdepTimeout);
@@ -281,7 +281,7 @@ static void resp_buf_wait(const char *cmd) {
     bool didPrint = false;
     while (!resp_buf.empty()) {
         if (!didPrint) {
-            dprintf("wait on buf for %s\n", cmd);
+            dprintfmt("wait on buf for %s\n", cmd);
             didPrint = true;
         }
         resp_buf_read_one(true);
@@ -367,7 +367,7 @@ static bool read_response(char *resp, uint16_t resplen, bool verbose) {
     success = !strcmp_P(last_line, kOK);
 
     if (verbose || !success) {
-        dprintf("result: %s\n", resp);
+        dprintfmt("result: %s\n", resp);
     }
     return success;
 }
@@ -377,7 +377,7 @@ static bool at_command(const char *cmd, char *resp, uint16_t resplen, bool verbo
     struct sdep_msg msg;
 
     if (verbose) {
-        dprintf("ble send: %s\n", cmd);
+        dprintfmt("ble send: %s\n", cmd);
     }
 
     if (resp) {
@@ -409,7 +409,7 @@ static bool at_command(const char *cmd, char *resp, uint16_t resplen, bool verbo
         }
         uint16_t later = timer_read();
         if (TIMER_DIFF_16(later, now) > 0) {
-            dprintf("waited %dms for resp_buf\n", TIMER_DIFF_16(later, now));
+            dprintfmt("waited %dms for resp_buf\n", TIMER_DIFF_16(later, now));
         }
         return true;
     }
@@ -465,7 +465,7 @@ bool bluefruit_le_enable_keyboard(void) {
         memcpy_P(&cmd, configure_commands + i, sizeof(cmd));
 
         if (!at_command_P(cmd, resbuf, sizeof(resbuf))) {
-            dprintf("failed BLE command: %S: %s\n", cmd, resbuf);
+            dprintfmt("failed BLE command: %S: %s\n", cmd, resbuf);
             goto fail;
         }
     }
@@ -568,7 +568,7 @@ static bool process_queue_item(struct queue_item *item, uint16_t timeout) {
 
 #if 1
     if (TIMER_DIFF_16(state.last_connection_update, item->added) > 0) {
-        dprintf("send latency %dms\n", TIMER_DIFF_16(state.last_connection_update, item->added));
+        dprintfmt("send latency %dms\n", TIMER_DIFF_16(state.last_connection_update, item->added));
     }
 #endif
 

@@ -221,7 +221,7 @@ void oneshot_set(bool active) {
         keymap_config.oneshot_enable = active;
         eeconfig_update_keymap(keymap_config.raw);
         clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-        dprintf("Oneshot: active: %d\n", active);
+        dprintfmt("Oneshot: active: %d\n", active);
     }
 }
 
@@ -262,7 +262,7 @@ static uint8_t get_mods_for_report(void) {
     if (oneshot_mods) {
 #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
         if (has_oneshot_mods_timed_out()) {
-            dprintf("Oneshot: timeout\n");
+            dprintfmt("Oneshot: timeout\n");
             clear_oneshot_mods();
         }
 #    endif

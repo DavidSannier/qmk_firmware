@@ -207,7 +207,7 @@ flash_status_t flash_erase_sector(uint32_t addr) {
 
     /* Check that the address exceeds the limit. */
     if ((addr + (EXTERNAL_FLASH_SECTOR_SIZE)) >= (EXTERNAL_FLASH_SIZE) || ((addr % (EXTERNAL_FLASH_SECTOR_SIZE)) != 0)) {
-        dprintf("Flash erase sector address over limit! [addr:0x%lx]\n", (uint32_t)addr);
+        dprintfmt("Flash erase sector address over limit! [addr:0x%lx]\n", (uint32_t)addr);
         return FLASH_STATUS_ERROR;
     }
 
@@ -247,7 +247,7 @@ flash_status_t flash_erase_block(uint32_t addr) {
 
     /* Check that the address exceeds the limit. */
     if ((addr + (EXTERNAL_FLASH_BLOCK_SIZE)) >= (EXTERNAL_FLASH_SIZE) || ((addr % (EXTERNAL_FLASH_BLOCK_SIZE)) != 0)) {
-        dprintf("Flash erase block address over limit! [addr:0x%lx]\n", (uint32_t)addr);
+        dprintfmt("Flash erase block address over limit! [addr:0x%lx]\n", (uint32_t)addr);
         return FLASH_STATUS_ERROR;
     }
 
@@ -303,11 +303,11 @@ flash_status_t flash_read_block(uint32_t addr, void *buf, size_t len) {
     }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_FLASH_SPI_OUTPUT)
-    dprintf("[SPI FLASH R] 0x%08lx: ", addr);
+    dprintfmt("[SPI FLASH R] 0x%08lx: ", addr);
     for (size_t i = 0; i < len; ++i) {
-        dprintf(" %02X", (int)(((uint8_t *)read_buf)[i]));
+        dprintfmt(" %02X", (int)(((uint8_t *)read_buf)[i]));
     }
-    dprintf("\n");
+    dprintfmt("\n");
 #endif // DEBUG_FLASH_SPI_OUTPUT
 
     return response;
@@ -339,11 +339,11 @@ flash_status_t flash_write_block(uint32_t addr, const void *buf, size_t len) {
         }
 
 #if defined(CONSOLE_ENABLE) && defined(DEBUG_FLASH_SPI_OUTPUT)
-        dprintf("[SPI FLASH W] 0x%08lx: ", addr);
+        dprintfmt("[SPI FLASH W] 0x%08lx: ", addr);
         for (size_t i = 0; i < write_length; i++) {
-            dprintf(" %02X", (int)(uint8_t)(write_buf[i]));
+            dprintfmt(" %02X", (int)(uint8_t)(write_buf[i]));
         }
-        dprintf("\n");
+        dprintfmt("\n");
 #endif // DEBUG_FLASH_SPI_OUTPUT
 
         /* Perform the write. */

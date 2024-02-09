@@ -51,10 +51,10 @@ uint8_t max7219_led_a[8][MAX7219_BUFFER_SIZE];
 /* Write max7219_spidata to all the max7219's
  */
 void max7219_write_all(void) {
-    dprintf("max7219_write_all()\n");
+    dprintfmt("max7219_write_all()\n");
     if (spi_start(MAX7219_LOAD, false, 0, 8)) {
         for(int i = MAX_BYTES; i>0; i--) {
-            dprintf("spi_write(%d)\n", max7219_spidata[i-1]);
+            dprintfmt("spi_write(%d)\n", max7219_spidata[i-1]);
             spi_write(max7219_spidata[i-1]);
         }
         spi_stop();
@@ -66,7 +66,7 @@ void max7219_write_all(void) {
 /* Write the current frame in max7219_led_a to all the max7219's
  */
 void max7219_write_frame(void) {
-    dprintf("max7219_write_frame()\n");
+    dprintfmt("max7219_write_frame()\n");
 
     // Set our opcode and data
     for (int col=0; col<8; col++) {
@@ -155,7 +155,7 @@ void max7219_message_sign_task(bool loop_message) {
 /* Write data to a single max7219
  */
 void max7219_write(int device_num, volatile uint8_t opcode, volatile uint8_t data) {
-    dprintf("max7219_write(%d, %d, %d)\n", device_num, opcode, data);
+    dprintfmt("max7219_write(%d, %d, %d)\n", device_num, opcode, data);
 
     // Clear the data array
     for(int i = MAX_BYTES; i>0; i--) {
@@ -174,7 +174,7 @@ void max7219_write(int device_num, volatile uint8_t opcode, volatile uint8_t dat
 /* Turn off all the LEDs
  */
 void max7219_clear_display(void) {
-    dprintf("max7219_clear_display();\n");
+    dprintfmt("max7219_clear_display();\n");
 
     for (int col=0; col<8; col++) {
         for (int device_num=0; device_num<MAX7219_BUFFER_SIZE; device_num++) {
@@ -187,7 +187,7 @@ void max7219_clear_display(void) {
 /* Enable the display test (IE turn on all 64 LEDs)
  */
 void max7219_display_test(int device_num, bool enabled) {
-    dprintf("max7219_display_test(%d, %d);\n", device_num, enabled);
+    dprintfmt("max7219_display_test(%d, %d);\n", device_num, enabled);
 
     if (device_num<0 || device_num >= MAX7219_CONTROLLERS) {
         return;
@@ -200,7 +200,7 @@ void max7219_display_test(int device_num, bool enabled) {
  */
 void max7219_init(void) {
     wait_ms(1500);
-    dprintf("max7219_init()\n");
+    dprintfmt("max7219_init()\n");
 
     setPinOutput(MAX7219_LOAD);
     writePinHigh(MAX7219_LOAD);
@@ -237,7 +237,7 @@ void max7219_init(void) {
 /* Set the decode mode of the controller. You probably don't want to change this.
  */
 void max7219_set_decode_mode(int device_num, int mode) {
-    dprintf("max7219_set_decode_mode(%d, %d);\n", device_num, mode);
+    dprintfmt("max7219_set_decode_mode(%d, %d);\n", device_num, mode);
 
     if (device_num<0 || device_num >= MAX7219_CONTROLLERS) {
         return;
@@ -249,7 +249,7 @@ void max7219_set_decode_mode(int device_num, int mode) {
 /* Set the intensity (brightness) for the LEDs.
  */
 void max7219_set_intensity(int device_num, int intensity) {
-    dprintf("max7219_set_intensity(%d, %d);\n", device_num, intensity);
+    dprintfmt("max7219_set_intensity(%d, %d);\n", device_num, intensity);
 
     if (device_num<0 || device_num >= MAX7219_CONTROLLERS) {
         return;
@@ -263,7 +263,7 @@ void max7219_set_intensity(int device_num, int intensity) {
 /* Control a single LED.
  */
 void max7219_set_led(int row, int column, bool state) {
-    dprintf("max7219_set_led(%d, %d, %d);\n", row, column, state);
+    dprintfmt("max7219_set_led(%d, %d, %d);\n", row, column, state);
 
     if (column<0 || column>8*MAX7219_CONTROLLERS) {
         xprintf("max7219_set_led: column (%d) out of bounds\n", column);
@@ -294,7 +294,7 @@ void max7219_set_led(int row, int column, bool state) {
 /* Set the number of digits (rows) to be scanned.
  */
 void max7219_set_scan_limit(int device_num, int limit) {
-    dprintf("max7219_set_scan_limit(%d, %d);\n", device_num, limit);
+    dprintfmt("max7219_set_scan_limit(%d, %d);\n", device_num, limit);
 
     if (device_num<0 || device_num >= MAX7219_CONTROLLERS) {
         return;
@@ -308,7 +308,7 @@ void max7219_set_scan_limit(int device_num, int limit) {
 /* Enable (true) or disable (false) the controller.
  */
 void max7219_shutdown(int device_num, bool shutdown) {
-    dprintf("max7219_shutdown(%d, %d);\n", device_num, shutdown);
+    dprintfmt("max7219_shutdown(%d, %d);\n", device_num, shutdown);
 
     if (device_num<0 || device_num >= MAX7219_CONTROLLERS) {
         return;

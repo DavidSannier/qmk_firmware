@@ -23,7 +23,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 }
 
 void xmk_matrix_key(bool press, uint8_t key) {
-  dprintf("xmk_matrix_key: press: %s, key: %u\n", press?"true":"false", key);
+  dprintfmt("xmk_matrix_key: press: %s, key: %u\n", press?"true":"false", key);
   uint8_t row = key / MATRIX_COLS;
   if (row < MATRIX_ROWS) {
     uint8_t col = key % MATRIX_COLS;

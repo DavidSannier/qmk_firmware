@@ -11,10 +11,10 @@
 
 #define TOGGLE_FLAG_AND_PRINT(var, name) { \
         if (var) { \
-            dprintf(name " disabled\r\n"); \
+            dprintfmt(name " disabled\r\n"); \
             var = !var; \
         } else { \
             var = !var; \
-            dprintf(name " enabled\r\n"); \
+            dprintfmt(name " enabled\r\n"); \
         } \
     }

@@ -247,7 +247,7 @@ static bool has_shift_mod(void) {
  */
 __attribute__((unused)) static void debug_charybdis_config_to_console(charybdis_config_t* config) {
 #    ifdef CONSOLE_ENABLE
-    IGNORE_FORMAT_WARNING(dprintf("(charybdis) process_record_kb: config = {\n"
+    IGNORE_FORMAT_WARNING(dprintfmt("(charybdis) process_record_kb: config = {\n"
                                   "\traw = 0x%04X,\n"
                                   "\t{\n"
                                   "\t\tis_dragscroll_enabled=%b\n"

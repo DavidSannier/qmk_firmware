@@ -314,18 +314,18 @@ void execute_head_and_pop(kring_t *ring) {
     uint16_t kc = head->keycode;
     if (is_mod_kc(kc)) {
         if (is_down(head)) {
-            dprintf("  %s: mod down 0x%04X\n", __func__, kc);
+            dprintfmt("  %s: mod down 0x%04X\n", __func__, kc);
             set_mods(get_mods() | MOD_BIT(kc));
         } else {
-            dprintf("  %s: mod up 0x%04X\n", __func__, kc);
+            dprintfmt("  %s: mod up 0x%04X\n", __func__, kc);
             set_mods(get_mods() & ~MOD_BIT(kc));
         }
     } else {
         if (is_down(head)) {
-            dprintf("  %s: key down 0x%04X\n", __func__, kc);
+            dprintfmt("  %s: key down 0x%04X\n", __func__, kc);
             register_code16(kc);
         } else {
-            dprintf("  %s: key up 0x%04X\n", __func__, kc);
+            dprintfmt("  %s: key up 0x%04X\n", __func__, kc);
             unregister_code16(kc);
         }
     }
@@ -338,11 +338,11 @@ bool parse_next(kring_t *pending) {
     pending_key_t *first = kring_get(pending, 0);
     if (!is_ambiguous_kc(first->keycode)) {
         // this pending key isn't ambiguous, so execute it.
-        dprintf(" %s: found unambiguous key\n", __func__);
+        dprintfmt(" %s: found unambiguous key\n", __func__);
         execute_head_and_pop(pending);
         return true;
     } else if (is_ambiguous_kc(first->keycode) && is_up(first)) {
-        dprintf(" %s: interpreting keyup as mod\n", __func__);
+        dprintfmt(" %s: interpreting keyup as mod\n", __func__);
         p.down = NULL;
         p.up = first;
         interpret_as_mod(&p);
@@ -351,7 +351,7 @@ bool parse_next(kring_t *pending) {
     } else if (is_downup_pair(first, &p)) {
         // 'first' was released before any other pressed key, so treat this as
         // a rolling series of normal key taps.
-        dprintf(" %s: found down-up pair, interpreting as normal key\n", __func__);
+        dprintfmt(" %s: found down-up pair, interpreting as normal key\n", __func__);
         interpret_as_normal(&p);
         execute_head_and_pop(pending);
         return true;
@@ -361,7 +361,7 @@ bool parse_next(kring_t *pending) {
         pending_key_t *next = first->next;
         while (next != NULL) {
             if (is_downup_pair(next, NULL)) {
-                dprintf(" %s: found subsequent downup pair, interpreting head as mod\n", __func__);
+                dprintfmt(" %s: found subsequent downup pair, interpreting head as mod\n", __func__);
                 p.down = first;
                 p.up = NULL;
                 interpret_as_mod(&p);
@@ -372,7 +372,7 @@ bool parse_next(kring_t *pending) {
         }
 
         // we can't disambiguate 'first' yet.  wait for another keypress.
-        dprintf(" %s: can't disambiguate (yet)\n", __func__);
+        dprintfmt(" %s: can't disambiguate (yet)\n", __func__);
         return false;
     }
 }
@@ -385,18 +385,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (g_pending.count == 0 && !is_ambiguous_kc(keycode)) {
         // we have no pending keys and this key isn't ambiguous, so we should
         // just let QMK take care of it.
-        dprintf("%s: handled by qmk\n", __func__);
+        dprintfmt("%s: handled by qmk\n", __func__);
         return true;
     } else {
-        dprintf("%s: got dual-role key\n", __func__);
+        dprintfmt("%s: got dual-role key\n", __func__);
         // append the keypress and then try parsing all pending keypresses.
         kring_append(&g_pending, keycode, record);
         while (g_pending.count > 0) {
-            dprintf("%s: looping through %d keys...\n", __func__, g_pending.count);
+            dprintfmt("%s: looping through %d keys...\n", __func__, g_pending.count);
             if (!parse_next(&g_pending)) {
                 // one of our keypresses is ambiguous and we can't proceed until
                 // we get further keypresses to disambiguate it.
-                dprintf("%s: %d pending keys are ambiguous\n", __func__, g_pending.count);
+                dprintfmt("%s: %d pending keys are ambiguous\n", __func__, g_pending.count);
                 break;
             }
         }

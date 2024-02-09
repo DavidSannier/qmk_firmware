@@ -41,12 +41,12 @@ void check_encoder_buttons(void) {
     if (btn1_pressed && btn2_pressed && btn3_pressed && btn4_pressed) {
         // All 4 buttons pressed, toggle drawing mode
 	if (drawing_mode) {
-            dprintf("Turning drawing mode off.\n");
+            dprintfmt("Turning drawing mode off.\n");
             drawing_mode = false;
             writePinLow(D6);
 	    unregister_code(KC_BTN1);
 	} else {
-            dprintf("Turning drawing mode on.\n");
+            dprintfmt("Turning drawing mode on.\n");
             drawing_mode = true;
             writePinHigh(D6);
 	    register_code(KC_BTN1);
@@ -76,10 +76,10 @@ void matrix_scan_kb(void) {
 
     if ((detected_shakes > 0) && (timer_elapsed(shake_timer) > SHAKE_TIMEOUT)) {
         if (detected_shakes > SHAKE_COUNT) {
-            dprintf("Shake triggered! We detected %d shakes.\n", detected_shakes);
+            dprintfmt("Shake triggered! We detected %d shakes.\n", detected_shakes);
             tap_code16(SHAKE_KEY);
         } else {
-            dprintf("Shake not triggered! We detected %d shakes.\n", detected_shakes);
+            dprintfmt("Shake not triggered! We detected %d shakes.\n", detected_shakes);
         }
         detected_shakes = 0;
     }

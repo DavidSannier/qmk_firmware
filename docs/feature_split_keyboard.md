@@ -353,7 +353,7 @@ void housekeeping_task_user(void) {
             slave_to_master_t s2m = {0};
             if(transaction_rpc_exec(USER_SYNC_A, sizeof(m2s), &m2s, sizeof(s2m), &s2m)) {
                 last_sync = timer_read32();
-                dprintf("Slave value: %d\n", s2m.s2m_data); // this will now be 11, as the slave adds 5
+                dprintfmt("Slave value: %d\n", s2m.s2m_data); // this will now be 11, as the slave adds 5
             } else {
                 dprint("Slave sync failed!\n");
             }

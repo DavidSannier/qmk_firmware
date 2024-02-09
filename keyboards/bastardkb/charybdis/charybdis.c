@@ -240,7 +240,7 @@ static bool has_shift_mod(void) {
  */
 static void debug_charybdis_config_to_console(charybdis_config_t* config) {
 #    ifdef CONSOLE_ENABLE
-    dprintf("(charybdis) process_record_kb: config = {\n"
+    dprintfmt("(charybdis) process_record_kb: config = {\n"
             "\traw = 0x%X,\n"
             "\t{\n"
             "\t\tis_dragscroll_enabled=%u\n"

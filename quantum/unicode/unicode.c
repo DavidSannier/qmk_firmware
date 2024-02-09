@@ -157,7 +157,7 @@ void unicode_input_mode_init(void) {
 #    endif
 #endif
     unicode_input_mode_set_kb(unicode_config.input_mode);
-    dprintf("Unicode input mode init to: %u\n", unicode_config.input_mode);
+    dprintfmt("Unicode input mode init to: %u\n", unicode_config.input_mode);
 }
 
 uint8_t get_unicode_input_mode(void) {
@@ -175,7 +175,7 @@ void set_unicode_input_mode(uint8_t mode) {
     unicode_play_song(mode);
 #endif
     unicode_input_mode_set_kb(mode);
-    dprintf("Unicode input mode set to: %u\n", unicode_config.input_mode);
+    dprintfmt("Unicode input mode set to: %u\n", unicode_config.input_mode);
 }
 
 static void cycle_unicode_input_mode(int8_t offset) {
@@ -196,7 +196,7 @@ static void cycle_unicode_input_mode(int8_t offset) {
 #    endif
 
     unicode_input_mode_set_kb(unicode_config.input_mode);
-    dprintf("Unicode input mode cycle to: %u\n", unicode_config.input_mode);
+    dprintfmt("Unicode input mode cycle to: %u\n", unicode_config.input_mode);
 #endif
 }
 

@@ -21,7 +21,7 @@ void usbpd_update(void) {
     if (timer_elapsed32(last_read) > 250) {
         usbpd_allowance_t allowance = usbpd_get_allowance();
         if (kb_state.current_setting != allowance) {
-            dprintf("Transitioning UCPD1 %s -> %s\n", usbpd_str(kb_state.current_setting), usbpd_str(allowance));
+            dprintfmt("Transitioning UCPD1 %s -> %s\n", usbpd_str(kb_state.current_setting), usbpd_str(allowance));
             kb_state.current_setting = allowance;
         }
     }

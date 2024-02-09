@@ -50,7 +50,7 @@ void change_RGB(bool clockwise) {
     bool ctrl  = get_mods() & MOD_MASK_CTRL;
 
 #ifdef CONSOLE_ENABLE
-    dprintf("Mods: %u\n", get_mods());
+    dprintfmt("Mods: %u\n", get_mods());
 #endif
 
     if (clockwise) {

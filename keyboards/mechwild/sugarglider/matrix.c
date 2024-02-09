@@ -25,7 +25,7 @@ static void mcp23018_scan(void) {
     static uint16_t mcp23018_reset_loop = 0;
     if (++mcp23018_reset_loop > 0x1FFF) {
         // tuned to about 5s given the current scan rate
-        dprintf("trying to reset mcp23018\n");
+        dprintfmt("trying to reset mcp23018\n");
         mcp23018_reset_loop = 0;
         mcp23018_errors     = 0;
         mcp23018_init_cols();

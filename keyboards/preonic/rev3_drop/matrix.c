@@ -46,7 +46,7 @@ __attribute__((weak)) void matrix_scan_kb(void) {
 }
 
 void matrix_init(void) {
-    dprintf("matrix init\n");
+    dprintfmt("matrix init\n");
     // debug_matrix = true;
 
     // actual matrix setup
@@ -160,16 +160,16 @@ matrix_row_t matrix_get_row(uint8_t row) {
 }
 
 void matrix_print(void) {
-    dprintf("\nr/c 01234567\n");
+    dprintfmt("\nr/c 01234567\n");
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        dprintf("%X0: ", row);
+        dprintfmt("%X0: ", row);
         matrix_row_t data = matrix_get_row(row);
         for (int col = 0; col < MATRIX_COLS; col++) {
             if (data & (1 << col))
-                dprintf("1");
+                dprintfmt("1");
             else
-                dprintf("0");
+                dprintfmt("0");
         }
-        dprintf("\n");
+        dprintfmt("\n");
     }
 }

@@ -116,7 +116,7 @@ uint8_t matrix_scan(void)
         if (matrix_debouncing[i] != row) {
             matrix_debouncing[i] = row;
             if (debouncing) {
-                dprintf("bounce!: %02X\n", debouncing);
+                dprintfmt("bounce!: %02X\n", debouncing);
             }
             debouncing = DEBOUNCE;
         }

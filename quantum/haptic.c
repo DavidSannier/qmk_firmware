@@ -88,11 +88,11 @@ void haptic_init(void) {
     }
 #ifdef HAPTIC_SOLENOID
     solenoid_setup();
-    dprintf("Solenoid driver initialized\n");
+    dprintfmt("Solenoid driver initialized\n");
 #endif
 #ifdef HAPTIC_DRV2605L
     drv2605l_init();
-    dprintf("DRV2605 driver initialized\n");
+    dprintfmt("DRV2605 driver initialized\n");
 #endif
     eeconfig_debug_haptic();
 #ifdef HAPTIC_ENABLE_PIN
@@ -114,20 +114,20 @@ void haptic_task(void) {
 }
 
 void eeconfig_debug_haptic(void) {
-    dprintf("haptic_config eeprom\n");
-    dprintf("haptic_config.enable = %d\n", haptic_config.enable);
-    dprintf("haptic_config.mode = %d\n", haptic_config.mode);
+    dprintfmt("haptic_config eeprom\n");
+    dprintfmt("haptic_config.enable = %d\n", haptic_config.enable);
+    dprintfmt("haptic_config.mode = %d\n", haptic_config.mode);
 }
 
 void haptic_enable(void) {
     set_haptic_config_enable(true);
-    dprintf("haptic_config.enable = %u\n", haptic_config.enable);
+    dprintfmt("haptic_config.enable = %u\n", haptic_config.enable);
     eeconfig_update_haptic(haptic_config.raw);
 }
 
 void haptic_disable(void) {
     set_haptic_config_enable(false);
-    dprintf("haptic_config.enable = %u\n", haptic_config.enable);
+    dprintfmt("haptic_config.enable = %u\n", haptic_config.enable);
     eeconfig_update_haptic(haptic_config.raw);
 }
 
@@ -143,7 +143,7 @@ void haptic_toggle(void) {
 void haptic_feedback_toggle(void) {
     haptic_config.feedback++;
     if (haptic_config.feedback >= HAPTIC_FEEDBACK_MAX) haptic_config.feedback = KEY_PRESS;
-    dprintf("haptic_config.feedback = %u\n", !haptic_config.feedback);
+    dprintfmt("haptic_config.feedback = %u\n", !haptic_config.feedback);
     eeconfig_update_haptic(haptic_config.raw);
 }
 
@@ -226,26 +226,26 @@ void haptic_reset(void) {
     haptic_config.buzz  = 0;
 #endif
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.feedback = %u\n", haptic_config.feedback);
-    dprintf("haptic_config.mode = %u\n", haptic_config.mode);
+    dprintfmt("haptic_config.feedback = %u\n", haptic_config.feedback);
+    dprintfmt("haptic_config.mode = %u\n", haptic_config.mode);
 }
 
 void haptic_set_feedback(uint8_t feedback) {
     haptic_config.feedback = feedback;
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.feedback = %u\n", haptic_config.feedback);
+    dprintfmt("haptic_config.feedback = %u\n", haptic_config.feedback);
 }
 
 void haptic_set_mode(uint8_t mode) {
     haptic_config.mode = mode;
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.mode = %u\n", haptic_config.mode);
+    dprintfmt("haptic_config.mode = %u\n", haptic_config.mode);
 }
 
 void haptic_set_amplitude(uint8_t amp) {
     haptic_config.amplitude = amp;
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.amplitude = %u\n", haptic_config.amplitude);
+    dprintfmt("haptic_config.amplitude = %u\n", haptic_config.amplitude);
 #ifdef HAPTIC_DRV2605L
     drv2605l_amplitude(amp);
 #endif
@@ -254,13 +254,13 @@ void haptic_set_amplitude(uint8_t amp) {
 void haptic_set_buzz(uint8_t buzz) {
     haptic_config.buzz = buzz;
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.buzz = %u\n", haptic_config.buzz);
+    dprintfmt("haptic_config.buzz = %u\n", haptic_config.buzz);
 }
 
 void haptic_set_dwell(uint8_t dwell) {
     haptic_config.dwell = dwell;
     eeconfig_update_haptic(haptic_config.raw);
-    dprintf("haptic_config.dwell = %u\n", haptic_config.dwell);
+    dprintfmt("haptic_config.dwell = %u\n", haptic_config.dwell);
 }
 
 uint8_t haptic_get_enable(void) {
@@ -290,7 +290,7 @@ uint8_t haptic_get_dwell(void) {
 
 void haptic_enable_continuous(void) {
     haptic_config.cont = 1;
-    dprintf("haptic_config.cont = %u\n", haptic_config.cont);
+    dprintfmt("haptic_config.cont = %u\n", haptic_config.cont);
     eeconfig_update_haptic(haptic_config.raw);
 #ifdef HAPTIC_DRV2605L
     drv2605l_rtp_init();
@@ -299,7 +299,7 @@ void haptic_enable_continuous(void) {
 
 void haptic_disable_continuous(void) {
     haptic_config.cont = 0;
-    dprintf("haptic_config.cont = %u\n", haptic_config.cont);
+    dprintfmt("haptic_config.cont = %u\n", haptic_config.cont);
     eeconfig_update_haptic(haptic_config.raw);
 #ifdef HAPTIC_DRV2605L
     drv2605l_write(DRV2605L_REG_MODE, 0x00);

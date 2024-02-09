@@ -63,7 +63,7 @@ bool pca9555_set_output_all(uint8_t slave_addr, uint8_t confA, uint8_t confB) {
 
     i2c_status_t ret = i2c_write_register(addr, CMD_OUTPUT_0, &conf[0], sizeof(conf), TIMEOUT);
     if (ret != I2C_STATUS_SUCCESS) {
-        dprintf("pca9555_set_output::FAILED::%u\n", ret);
+        dprintfmt("pca9555_set_output::FAILED::%u\n", ret);
         return false;
     }
 

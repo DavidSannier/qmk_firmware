@@ -50,7 +50,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_LINUX ... KC_WIN:
             if (record->event.pressed) {
-                dprintf("set_single_persistent_default_layer %d\n", keycode - KC_LINUX + LINUX);
+                dprintfmt("set_single_persistent_default_layer %d\n", keycode - KC_LINUX + LINUX);
                 set_single_persistent_default_layer(keycode - KC_LINUX + LINUX);
                 return false;
             }

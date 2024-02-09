@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    dprintf("process_record_user %u %s %s %d\n", keycode, record->event.pressed ? "pressed" : "depressed", record->tap.interrupted ? "interrupted" : "not interrupted", record->tap.count);
+    dprintfmt("process_record_user %u %s %s %d\n", keycode, record->event.pressed ? "pressed" : "depressed", record->tap.interrupted ? "interrupted" : "not interrupted", record->tap.count);
 
     if (record->event.pressed) {
         uint8_t data[32];
@@ -114,7 +114,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
 
         if (data[0]) {
-            dprintf("raw_hid_send %u\n", data[0]);
+            dprintfmt("raw_hid_send %u\n", data[0]);
             raw_hid_send(data, sizeof(data));
         }
     }
@@ -128,7 +128,7 @@ void caps_word_set_user(bool active) {
     if (is_display_enabled()) {
         display_process_caps_word(active);
     } else if (is_keyboard_master() && !is_keyboard_left()) {
-        dprintf("RPC_ID_USER_CAPS_WORD_SYNC: %s\n", active ? "active" : "inactive");
+        dprintfmt("RPC_ID_USER_CAPS_WORD_SYNC: %s\n", active ? "active" : "inactive");
         transaction_rpc_send(RPC_ID_USER_CAPS_WORD_SYNC, 1, &active);
     }
 }
@@ -140,7 +140,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         display_process_layer_state(get_highest_layer(state));
     } else if (is_keyboard_master() && !is_keyboard_left()) {
         uint8_t layer = get_highest_layer(state);
-        dprintf("RPC_ID_USER_LAYER_SYNC: %u\n", layer);
+        dprintfmt("RPC_ID_USER_LAYER_SYNC: %u\n", layer);
         transaction_rpc_send(RPC_ID_USER_LAYER_SYNC, 1, &layer);
     }
 
@@ -149,7 +149,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 /* Raw HID processing*/
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-    dprintf("raw_hid_receive - received %u bytes \n", length);
+    dprintfmt("raw_hid_receive - received %u bytes \n", length);
 
     if (is_display_enabled()) {
         display_process_raw_hid_data(data, length);

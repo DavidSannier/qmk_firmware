@@ -139,7 +139,7 @@ void audio_init(void) {
 
     audio_config.raw = eeconfig_read_audio();
     if (!audio_config.valid) {
-        dprintf("audio_init audio_config.valid = 0. Write default values to EEPROM.\n");
+        dprintfmt("audio_init audio_config.valid = 0. Write default values to EEPROM.\n");
         eeconfig_update_audio_default();
     }
 

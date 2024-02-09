@@ -27,7 +27,7 @@ void dynamic_macro_led_blink(void) {
  * @param macro_id[in]     The id of macro to be recorded
  */
 void dynamic_macro_record_start(uint8_t macro_id) {
-  dprintf("dynamic macro recording: started for slot %d\n", macro_id);
+  dprintfmt("dynamic macro recording: started for slot %d\n", macro_id);
 
   dynamic_macro_led_blink();
 
@@ -43,7 +43,7 @@ void dynamic_macro_record_start(uint8_t macro_id) {
  * @param macro_id[in]     The id of macro to be played
  */
 void dynamic_macro_play(uint8_t macro_id) {
-  dprintf("dynamic macro: slot %d playback, length %d\n", macro_id, dynamic_macros[macro_id].length);
+  dprintfmt("dynamic macro: slot %d playback, length %d\n", macro_id, dynamic_macros[macro_id].length);
 
   uint32_t saved_layer_state = layer_state;
 
@@ -82,7 +82,7 @@ void dynamic_macro_record_key(uint8_t macro_id, keyrecord_t* record) {
     dynamic_macro_led_blink();
   }
 
-  dprintf("dynamic macro: slot %d length: %d/%d\n", macro_id, length, DYNAMIC_MACRO_SIZE);
+  dprintfmt("dynamic macro: slot %d length: %d/%d\n", macro_id, length, DYNAMIC_MACRO_SIZE);
 }
 
 /**
@@ -98,7 +98,7 @@ void dynamic_macro_record_end(uint8_t macro_id) {
   keyrecord_t* events_begin   = &(macro->events[0]);
   keyrecord_t* events_pointer = &(macro->events[length - 1]);
 
-  dprintf("dynamic_macro: macro length before trimming: %d\n", macro->length);
+  dprintfmt("dynamic_macro: macro length before trimming: %d\n", macro->length);
   while (events_pointer != events_begin && (events_pointer)->event.pressed) {
     dprintln("dynamic macro: trimming a trailing key-down event");
     --(macro->length);
@@ -110,7 +110,7 @@ void dynamic_macro_record_end(uint8_t macro_id) {
   dynamic_macro_save_eeprom(macro_id);
 #endif
 
-  dprintf("dynamic macro: slot %d saved, length: %d\n", macro_id, length);
+  dprintfmt("dynamic macro: slot %d saved, length: %d\n", macro_id, length);
 }
 
 /* Handle the key events related to the dynamic macros. Should be
@@ -134,7 +134,7 @@ bool process_record_dynamic_macro(uint16_t keycode, keyrecord_t* record) {
       dynamic_macro_led_blink();
 
       recording_state = STATE_RECORD_KEY_PRESSED;
-      dprintf("dynamic macro: programming key pressed, waiting for macro slot selection. %d\n", recording_state);
+      dprintfmt("dynamic macro: programming key pressed, waiting for macro slot selection. %d\n", recording_state);
 
       return false;
     }
@@ -154,7 +154,7 @@ bool process_record_dynamic_macro(uint16_t keycode, keyrecord_t* record) {
       dynamic_macro_led_blink();
 
       recording_state = STATE_NOT_RECORDING;
-      dprintf("dynamic macro: programming key pressed, programming mode canceled. %d\n", recording_state);
+      dprintfmt("dynamic macro: programming key pressed, programming mode canceled. %d\n", recording_state);
 
       return false;
     } else if (keycode >= DYN_MACRO_KEY1 && keycode <= DYN_MACRO_KEY12 && record->event.pressed) {
@@ -216,7 +216,7 @@ bool dynamic_macro_header_correct(void) {
 
 void dynamic_macro_load_eeprom_all(void) {
   if (!dynamic_macro_header_correct()) {
-    dprintf("dynamic_macro: eeprom header not valid, not restoring macros.\n");
+    dprintfmt("dynamic_macro: eeprom header not valid, not restoring macros.\n");
     return;
   }
 
@@ -232,23 +232,23 @@ void dynamic_macro_load_eeprom(uint8_t macro_id) {
 
   /* Validate checksum, ifchecksum is NOT valid for macro, set its length to 0 to prevent its use. */
   if (dynamic_macro_calc_crc(dst) != dst->checksum) {
-    dprintf("dynamic macro: slot %d not loaded, checksum mismatch\n", macro_id);
+    dprintfmt("dynamic macro: slot %d not loaded, checksum mismatch\n", macro_id);
     dst->length = 0;
 
     return;
   }
 
-  dprintf("dynamic macro: slot %d loaded from eeprom, checksum okay\n", macro_id);
+  dprintfmt("dynamic macro: slot %d loaded from eeprom, checksum okay\n", macro_id);
 }
 
 void dynamic_macro_save_eeprom(uint8_t macro_id) {
   if (!dynamic_macro_header_correct()) {
     eeprom_write_word(DYNAMIC_MACRO_EEPROM_MAGIC_ADDR, DYNAMIC_MACRO_EEPROM_MAGIC);
-    dprintf("dynamic macro: writing magic eeprom header\n");
+    dprintfmt("dynamic macro: writing magic eeprom header\n");
   }
 
   dynamic_macro_t* src = &dynamic_macros[macro_id];
 
   eeprom_update_block(src, dynamic_macro_eeprom_macro_addr(macro_id), sizeof(dynamic_macro_t));
-  dprintf("dynamic macro: slot %d saved to eeprom\n", macro_id);
+  dprintfmt("dynamic macro: slot %d saved to eeprom\n", macro_id);
 }

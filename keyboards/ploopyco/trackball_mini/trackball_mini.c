@@ -95,7 +95,7 @@ void process_wheel(void) {
     uint16_t p1 = adc_read(OPT_ENC1_MUX);
     uint16_t p2 = adc_read(OPT_ENC2_MUX);
 
-    if (debug_encoder) dprintf("OPT1: %d, OPT2: %d\n", p1, p2);
+    if (debug_encoder) dprintfmt("OPT1: %d, OPT2: %d\n", p1, p2);
 
     int8_t dir = opt_encoder_handler(p1, p2);
 

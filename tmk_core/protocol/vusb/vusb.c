@@ -313,12 +313,12 @@ usbMsgLen_t usbFunctionSetup(uchar data[8]) {
                 return USB_NO_MSG; // to get data in usbFunctionWrite
             case USBRQ_HID_SET_IDLE:
                 keyboard_idle = (rq->wValue.word & 0xFF00) >> 8;
-                dprintf("SET_IDLE: %02X", keyboard_idle);
+                dprintfmt("SET_IDLE: %02X", keyboard_idle);
                 break;
             case USBRQ_HID_SET_PROTOCOL:
                 if (rq->wIndex.word == KEYBOARD_INTERFACE) {
                     keyboard_protocol = rq->wValue.word & 0xFF;
-                    dprintf("SET_PROTOCOL: %02X", keyboard_protocol);
+                    dprintfmt("SET_PROTOCOL: %02X", keyboard_protocol);
                 }
                 break;
             default:
@@ -339,7 +339,7 @@ uchar usbFunctionWrite(uchar *data, uchar len) {
     }
     switch (last_req.kind) {
         case SET_LED:
-            dprintf("SET_LED: %02X\n", data[0]);
+            dprintfmt("SET_LED: %02X\n", data[0]);
             keyboard_led_state = data[0];
             last_req.len       = 0;
             return 1;

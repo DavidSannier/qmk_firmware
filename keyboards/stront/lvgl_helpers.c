@@ -40,7 +40,7 @@ void toggle_hidden(void *obj, bool visible) {
 }
 
 void resize_font(void *label, int32_t font_size) {
-    dprintf("font size %ld\n", font_size);
+    dprintfmt("font size %ld\n", font_size);
 #if LV_FONT_MONTSERRAT_8
     if (font_size == 8) return lv_obj_set_style_text_font(label, &lv_font_montserrat_8, LV_PART_MAIN);
 #endif
